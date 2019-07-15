@@ -5,11 +5,6 @@
 						<i class="fas fa-bars"></i>
 					</a>
 				</li>
-				<li class="list-unstyled modulo">
-					<a href="#"  id="linkMifoto2" class="color borde">
-						<i class="far fa-user-circle"></i>
-					</a>
-				</li>
 				<li class="list-unstyled">
 					<a href="#" id="linkCambioPass2"  class="color borde">
 						<i class="fas fa-unlock-alt"></i>

@@ -60,9 +60,9 @@ $.ajax({
            }
      });
 }
-
+ 
 function actualiza_datos() {
-
+ 
  $.ajax({
   url:"../inicio/actualiza_datos.php",
   type:"POST",
@@ -73,6 +73,7 @@ function actualiza_datos() {
       alertify.set('notifier','position','botton-right');
       alertify.success('se ha actualizado el registro');
       llenarMisDatos();
+
     }else{
       alertify.set('notifier','position','botton-right');
       alertify.success('Ha ocurido un Error');
@@ -102,7 +103,7 @@ $(document).ready(function() {
         formData.append('user',usuario);
 
         $.ajax({
-            url: 'upload.php', 
+            url: '../inicio/upload.php', 
             type: 'post',
             data: formData,
             contentType: false,
@@ -161,7 +162,7 @@ function llenarFoto() {
       $("#miFoto").html(respuesta);
       $("#miFoto").hide();
       $("#miFoto").fadeIn("slow");
-    },
+    }, 
     error: function(xhr, status) {
       alert("no se muestra");
     }
@@ -173,6 +174,7 @@ function ocultarSec(){
     $("#misDatos").hide();
     $("#miFoto").hide();
     $("#cambioPass").hide();
+    $("#lista").hide();
 
 }
 
@@ -209,8 +211,4 @@ $("#linkCambioPass2").on("click", function() {
   CambioContrasena();
   QuitarClass();
   
-});
-$("#linkMifoto2").on("click", function() {
-  llenarFoto();
-  QuitarClass();
 });

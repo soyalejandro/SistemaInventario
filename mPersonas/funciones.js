@@ -1,6 +1,6 @@
 function llenar_lista(){
      // console.log("Se ha llenado lista");
-    // preCarga(1000,4);
+    preCarga(1000,4);
     $.ajax({
         url:"llenarLista.php",
         type:"POST",
@@ -17,10 +17,12 @@ function llenar_lista(){
 }
 
 function ver_alta(){
-    // preCarga(800,4);
+    preCarga(800,4);
     $("#lista").slideUp('low');
     $("#alta").slideDown('low');
+    $("#frmAlta")[0].reset();
     $("#nombre").focus();
+    llenar_sede();
 }
 
 function ver_lista(){
@@ -45,35 +47,43 @@ $("#frmAlta").submit(function(e){
     var correo    = $("#correo").val();
     var tipo      = $("#tipo").val();
 
-        $.ajax({
-            url:"guardar.php",
-            type:"POST",
-            dateType:"html",
-            data:{
-                    'nombre':nombre,
-                    'paterno':paterno,
-                    'materno':materno,
-                    'direccion':direccion,
-                    'sexo':sexo,
-                    'telefono':telefono,
-                    'fecha_nac':fecha_nac,
-                    'correo':correo,
-                    'tipo':tipo
-                 },
-            success:function(respuesta){
-              
-            alertify.set('notifier','position', 'bottom-right');
-            alertify.success('Se ha guardado el registro' );
-            $("#frmAlta")[0].reset();
-            $("#nombre").focus();
-            // llenarLista();
-            },
-            error:function(xhr,status){
-                alert(xhr);
-            },
-        });
-        e.preventDefault();
-        return false;
+
+    $.ajax({
+        url:"guardar.php",
+        type:"POST",
+        dateType:"html",
+        data:{
+            'nombre':nombre,
+            'paterno':paterno,
+            'materno':materno,
+            'direccion':direccion,
+            'sexo':sexo,
+            'telefono':telefono,
+            'fecha_nac':fecha_nac,
+            'correo':correo,
+            'tipo':tipo
+        },
+        success:function(respuesta){
+            if(respuesta == "ok"){
+                alertify.set('notifier','position', 'bottom-right');
+                alertify.success('Se ha guardado el registro' );
+                $("#frmAlta")[0].reset();
+                $("#nombre").focus();
+                $("#alta").hide();
+                llenar_lista();
+                llenar_sede();
+            }else{
+                alertify.set('notifier','position', 'bottom-right');
+                alertify.error('Registro Duplicado');
+            }
+        // llenarLista();
+        },
+        error:function(xhr,status){
+            alert(xhr);
+        },
+    });
+    e.preventDefault();
+    return false;
 });
 
 function abrirModalEditar(nombre,paterno,materno,direccion,telefono,fecha_nac,correo,tipo,sexo,ide){
@@ -89,13 +99,12 @@ function abrirModalEditar(nombre,paterno,materno,direccion,telefono,fecha_nac,co
     $("#tipoE").val(tipo);
     $("#sexoE").val(sexo);
     $("#idE").val(ide);
-
     $(".select2").select2();
 
     $("#modalEditar").modal("show");
 
      $('#modalEditar').on('shown.bs.modal', function () {
-         $('#nombreE').focus();
+        $('#nombreE').focus();
      });   
 }
 
@@ -112,36 +121,41 @@ $("#frmActuliza").submit(function(e){
     var tipo      = $("#tipoE").val();
     var ide       = $("#idE").val();
 
-        $.ajax({
-            url:"actualizar.php",
-            type:"POST",
-            dateType:"html",
-            data:{
-                    'nombre':nombre,
-                    'paterno':paterno,
-                    'materno':materno,
-                    'direccion':direccion,
-                    'sexo':sexo,
-                    'telefono':telefono,
-                    'fecha_nac':fecha_nac,
-                    'correo':correo,
-                    'tipo':tipo,
-                    'ide':ide
-                 },
-            success:function(respuesta){
-
-            alertify.set('notifier','position', 'bottom-right');
-            alertify.success('Se ha actualizado el registro' );
-            $("#frmActuliza")[0].reset();
-            $("#modalEditar").modal("hide");
-            llenar_lista();
-            },
-            error:function(xhr,status){
-                alert(xhr);
-            },
-        });
-        e.preventDefault();
-        return false;
+    $.ajax({
+        url:"actualizar.php",
+        type:"POST",
+        dateType:"html",
+        data:{
+            'nombre':nombre,
+            'paterno':paterno,
+            'materno':materno,
+            'direccion':direccion,
+            'sexo':sexo,
+            'telefono':telefono,
+            'fecha_nac':fecha_nac,
+            'correo':correo,
+            'tipo':tipo,
+            'ide':ide
+        },
+        success:function(respuesta){
+            if(respuesta == "ok"){
+                alertify.set('notifier','position', 'bottom-right');
+                alertify.success('Se ha actualizado el registro' );
+                $("#frmActuliza")[0].reset();
+                $("#modalEditar").modal("hide");
+                llenar_lista();
+                llenar_sede();
+            }else{
+                alertify.set('notifier','position', 'bottom-right');
+                alertify.error('Registro Duplicado');
+            }
+        },
+        error:function(xhr,status){
+            alert(xhr);
+        },
+    });
+    e.preventDefault();
+    return false;
 });
 
 function status(concecutivo,id){
@@ -191,13 +205,11 @@ function status(concecutivo,id){
         },
     });
 }
+function imprimir(valor){ 
 
-function imprimir(){
-
-    var titular = "Lista de personas";
-    var mensaje = "¿Deseas generar un archivo con PDF oon la lista de personas activas";
-    // var link    = "pdfListaPersona.php?id="+idPersona+"&datos="+datos;
-    var link    = "pdfListaPersona.php?";
+  var titular = "Lista de Personas";
+  var mensaje = "¿Deseas generar un archivo con PDF oon la lista de las personas activos";
+ var link    = "pdfListaPersona.php?valor="+valor;
 
     alertify.confirm('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
     alertify.confirm(
@@ -211,4 +223,4 @@ function imprimir(){
                 // console.log('cancelado')
               }
     ).set('labels',{ok:'Generar PDF',cancel:'Cancelar'}); 
-  }
+}

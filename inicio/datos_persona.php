@@ -18,7 +18,6 @@
               INNER JOIN personas ON usuarios.id_persona = personas.id_persona
               WHERE usuarios.id_usuario='$id_usuario'",$conexion) or die (mysql_error());
               $row = mysql_fetch_array($consulta);
-
               $array  = array( 
                               $row[1],// $nombre 
                               $row[2],// $paterno 
@@ -32,7 +31,8 @@
 
 
                                          
-                                                          
+                                        
+                                        
  echo json_encode($array);
     
  ?>

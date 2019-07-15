@@ -1,330 +1,271 @@
 function llenar_lista(){
-     // console.log("Se ha llenado lista");
-    // preCarga(1000,4);
-    $.ajax({
-        url:"llenarLista.php",
-        type:"POST",
-        dateType:"html",
-        data:{},
-        success:function(respuesta){
-            $("#lista").html(respuesta);
-            $("#lista").slideDown("fast");
-        },
-        error:function(xhr,status){
-            alert("no se muestra");
-        }
-    });	
+    // console.log("Se ha llenado lista");
+   // preCarga(1000,4);
+   $.ajax({
+       url:"llenarLista.php",
+       type:"POST",
+       dateType:"html",
+       data:{},
+       success:function(respuesta){
+           $("#lista").html(respuesta);
+           $("#lista").slideDown("fast");
+       },
+       error:function(xhr,status){
+           alert("no se muestra");
+       }
+   }); 
 }
 
 function ver_alta(){
-    // preCarga(800,4);
-    $("#lista").slideUp('low');
-    $("#alta").slideDown('low');
-    $("#nombre").focus();
+   // preCarga(800,4);
+   $("#lista").slideUp('low');
+   $("#alta").slideDown('low');
+   $("#noControl").focus();
 }
 
 function ver_lista(){
-    $("#alta").slideUp('low');
-    $("#lista").slideDown('low');
+   $("#alta").slideUp('low');
+   $("#lista").slideDown('low');
 }
 
 $('#btnLista').on('click',function(){
-    llenar_lista();
-    ver_lista();
+   llenar_lista();
+   ver_lista();
 });
 
 $("#frmAlta").submit(function(e){
-  
+   
     var idPersona = $("#idPersona").val();
     var usuario   = $("#usuario").val();
     var contra    = $("#contra").val();
-    var vContra   = $("#vContra").val();
+    //Validaciones
+   if(idPersona==0){
+       alertify.dialog('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
 
-    // validacion para no meter id de persona en 0
-    if(idPersona==0){
-        alertify.dialog('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
+       alertify.alert()
+       .setting({
+           'title':'Información',
+           'label':'Salir',
+           'message': 'Debes seleccionar el dato de una persona.' ,
+           'onok': function(){ alertify.message('Gracias !');}
+       }).show();
+       return false;       
+   }
+   
+   // console.log(nombreCompleto);
 
-        alertify.alert()
-        .setting({
-            'title':'Información',
-            'label':'Salir',
-            'message': 'Debes seleccionar el dato de una persona.' ,
-            'onok': function(){ alertify.message('Gracias !');}
-        }).show();
-        return false;       
-    }
-
-    // validacion para que el nombre de usuario sea minimo de 5 caracteres
-    caracteres=$("#usuario").val().length;
-    if(caracteres < 5){
-        alertify.dialog('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
-
-        alertify.alert()
-        .setting({
-            'title':'Información',
-            'label':'Salir',
-            'message': 'La cantidad de caracteres para el usario debe de ser mayor a 5' ,
-            'onok': function(){ alertify.message('Gracias !');}
-        }).show();
-        $("#usuario").focus();
-        return false;       
-    }
-
-    // validacion para que las contraseñas coincidan
-    if(contra != vContra){
-        alertify.dialog('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
-
-        alertify.alert()
-        .setting({
-            'title':'Información',
-            'label':'Salir',
-            'message': 'Las contraseñas deben de ser iguales.' ,
-            'onok': function(){ alertify.message('Gracias !');}
-        }).show();
-        $("#contra").focus();
-        return false;       
-    }
-  
-
-        $.ajax({
-            url:"guardar.php",
-            type:"POST",
-            dateType:"html",
-            data:{
-                    'idPersona':idPersona,
-                    'usuario':usuario,
-                    'contra':contra
-                 },
-            success:function(respuesta){
-              
-            alertify.set('notifier','position', 'bottom-right');
-            alertify.success('Se ha guardado el registro' );
-            $("#frmAlta")[0].reset();
-            llenar_persona();
-            },
-            error:function(xhr,status){
-                alert(xhr);
-            },
-        });
-        e.preventDefault();
-        return false;
+       $.ajax({
+           url:"guardar.php",
+           type:"POST",
+           dateType:"html",
+           data:{
+                 'usuario':usuario,
+                 'idPersona':idPersona,
+                 'contra':contra
+                },
+           success:function(respuesta){
+            if(respuesta == "ok"){
+              alertify.set('notifier','position', 'bottom-right');
+              alertify.success('Se ha guardado el registro' );
+              $("#frmAlta")[0].reset();
+              llenar_persona();
+              $("#alta").hide();
+              llenar_lista();
+            }else{
+              alertify.set('notifier','position', 'bottom-right');
+              alertify.error('Nombre de usuario ya existe' );
+            }
+           },
+           error:function(xhr,status){
+               alert(xhr);
+           },
+       });
+       e.preventDefault();
+       return false;
 });
 
-function abrirModalEditar(idUsuario,idPersona,usuario,contra,){
-   
+function abrirModalEditar(idPersona,usuario,idE){
+  
     $("#frmActuliza")[0].reset();
 
-    llenar_personaU(idPersona);
+   llenar_personaA(idPersona);
 
-    $("#idE").val(idUsuario);
-    
-    $("#usuarioE").val(usuario);
-    $("#contraE").val(contra);
-    $("#vContraE").val(contra);
+   $("#idE").val(idE);
+   $("#usuarioE").val(usuario);
 
-    $("#modalEditar").modal("show");
+   $("#modalEditar").modal("show");
 
-     $('#modalEditar').on('shown.bs.modal', function () {
-         $('#usuarioE').focus();
-     });   
+    $('#modalEditar').on('shown.bs.modal', function () {
+        $('#noControlE').focus();
+    });   
 }
 
 $("#frmActuliza").submit(function(e){
+ 
+   var usuario = $("#usuarioE").val();
+   var ide     = $("#idE").val();
   
-    var usuario = $("#usuarioE").val();
-    var contra  = $("#contraE").val();
-    var vContra  = $("#vContraE").val();
-
-       // validacion para que el nombre de usuario sea minimo de 5 caracteres
-       caracteres=$("#usuarioE").val().length;
-       if(caracteres < 5){
-           alertify.dialog('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
-   
-           alertify.alert()
-           .setting({
-               'title':'Información',
-               'label':'Salir',
-               'message': 'La cantidad de caracteres para el usario debe de ser mayor a 5' ,
-               'onok': function(){ alertify.message('Gracias !');}
-           }).show();
-           $("#usuarioE").focus();
-           return false;       
-       }
-   
-       // validacion para que las contraseñas coincidan
-       if(contra != vContra){
-           alertify.dialog('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
-   
-           alertify.alert()
-           .setting({
-               'title':'Información',
-               'label':'Salir',
-               'message': 'Las contraseñas deben de ser iguales.' ,
-               'onok': function(){ alertify.message('Gracias !');}
-           }).show();
-           $("#contra").focus();
-           return false;       
-       }
-    var ide     = $("#idE").val();
-
-        $.ajax({
-            url:"actualizar.php",
-            type:"POST",
-            dateType:"html",
-            data:{
-                    'usuario':usuario,
-                    'contra':contra,
-                    'ide':ide
-                 },
-            success:function(respuesta){
-
-            alertify.set('notifier','position', 'bottom-right');
-            alertify.success('Se ha actualizado el registro' );
-            $("#frmActuliza")[0].reset();
-            $("#modalEditar").modal("hide");
-            llenar_lista();
-            },
-            error:function(xhr,status){
-                alert(xhr);
-            },
-        });
-        e.preventDefault();
-        return false;
+       $.ajax({
+           url:"actualizar.php",
+           type:"POST",
+           dateType:"html",
+           data:{
+                   'usuario':usuario,
+                   'ide':ide
+                },
+           success:function(respuesta){
+            if(respuesta == "ok"){
+              alertify.set('notifier','position', 'bottom-right');
+              alertify.success('Se ha actualizado el registro' );
+              $("#frmActuliza")[0].reset();
+              $("#modalEditar").modal("hide");
+              llenar_lista();
+            }else{
+              alertify.set('notifier','position', 'bottom-right');
+              alertify.error('Nombre de usuario ya existe' );
+            }
+           },
+           error:function(xhr,status){
+               alert(xhr);
+           },
+       });
+       e.preventDefault();
+       return false;
 });
 
 function status(concecutivo,id){
-    var nomToggle = "#interruptor"+concecutivo;
-    var nomBoton  = "#boton"+concecutivo;
-    var numero    = "#tConsecutivo"+concecutivo;
-    var nCompleto = "#tNcompleto"+concecutivo;
-    var usuario   = "#tUsuario"+concecutivo;
-    var registro  = "#tRegistro"+concecutivo;
-    var nomBotonR  = "#botonR"+concecutivo;
+   var nomToggle      = "#interruptor"+concecutivo;
+   var nomBoton       = "#boton"+concecutivo;
+   var numero         = "#tConsecutivo"+concecutivo;
+   var tNombrePersona = "#tNombrePersona"+concecutivo;
+   var tUsuario       = "#tUsuario"+concecutivo;
+   var tFecha         = "#tFecha"+concecutivo;
+   var tRestaurar     = "#tRestaurar"+concecutivo;
 
-    if( $(nomToggle).is(':checked') ) {
-        // console.log("activado");
-        var valor=0;
-        alertify.success('Registro habilitado' );
-        $(nomBoton).removeAttr("disabled");
-        $(nomBotonR).removeAttr("disabled");
-        $(numero).removeClass("desabilita");
-        $(nCompleto).removeClass("desabilita");
-        $(usuario).removeClass("desabilita");
-        $(registro).removeClass("desabilita");
+   if( $(nomToggle).is(':checked') ) {
+       // console.log("activado");
+       var valor=0;
+       alertify.success('Registro habilitado' );
+       $(nomBoton).removeAttr("disabled");
+       $(numero).removeClass("desabilita");
+       $(tNombrePersona).removeClass("desabilita");
+       $(tUsuario).removeClass("desabilita");
+       $(tFecha).removeClass("desabilita");
+       $(tRestaurar).removeAttr("disabled");
 
-    }else{
-        // console.log("desactivado");
-        var valor=1;
-        alertify.error('Registro deshabilitado' );
-        $(nomBoton).attr("disabled", "disabled");
-        $(nomBotonR).attr("disabled", "disabled");
-        $(numero).addClass("desabilita");
-        $(nCompleto).addClass("desabilita");
-        $(usuario).addClass("desabilita");
-        $(registro).addClass("desabilita");
+   }else{
+       // console.log("desactivado");
+       var valor=1;
+       alertify.error('Registro deshabilitado' );
+       $(nomBoton).attr("disabled", "disabled");
+       $(numero).addClass("desabilita");
+       $(tNombrePersona).addClass("desabilita");
+       $(tUsuario).addClass("desabilita");
+       $(tFecha).addClass("desabilita");
+       $(tRestaurar).attr("disabled","disabled");
 
-    }
-    // console.log(concecutivo+' | '+id);
-    $.ajax({
-        url:"status.php",
-        type:"POST",
-        dateType:"html",
-        data:{
-                'valor':valor,
-                'id':id
-             },
-        success:function(respuesta){
-            // console.log(respuesta);
-        },
-        error:function(xhr,status){
-            alert(xhr);
-        },
-    });
+   }
+   // console.log(concecutivo+' | '+id);
+   $.ajax({
+       url:"status.php",
+       type:"POST",
+       dateType:"html",
+       data:{
+               'valor':valor,
+               'id':id
+            },
+       success:function(respuesta){
+           // console.log(respuesta);
+       },
+       error:function(xhr,status){
+           alert(xhr);
+       },
+   });
 }
 
 
 function llenar_persona()
 {
-    // alert(idRepre);
-    $.ajax({
-        url : 'comboPersonas.php',
-        // data : {'id':id},
-        type : 'POST',
-        dataType : 'html',
-        success : function(respuesta) {
-            $("#idPersona").empty();
-            $("#idPersona").html(respuesta);      
-        },
-        error : function(xhr, status) {
-            alert('Disculpe, existió un problema');
-        },
-    });
+   // alert(idRepre);
+   $.ajax({
+       url : 'comboPersonas.php',
+       // data : {'id':id},
+       type : 'POST',
+       dataType : 'html',
+       success : function(respuesta) {
+           $("#idPersona").empty();
+           $("#idPersona").html(respuesta);      
+       },
+       error : function(xhr, status) {
+           alert('Disculpe, existió un problema');
+       },
+   });
 }
-
-function restaurarContra(idUser){
-    // console.log(idUser);
-    $.ajax({
-        url:"restaurarContra.php",
-        type:"POST",
-        dateType:"html",
-        data:{
-                'idUser':idUser
-             },
-        success:function(respuesta){
-
-            alertify.dialog('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
-
-            alertify.alert()
-            .setting({
-                'title':'Información',
-                'label':'Salir',
-                'message': 'La contraseña ha sido modificada' ,
-                'onok': function(){ alertify.message('Gracias !');}
-            }).show();
-
-        },
-        error:function(xhr,status){
-            alert(xhr);
-        },
-    });
-}
-
-function mostrarContra(){
-    var btnMostrar=$('#btnMostrar').val();
-    // console.log(btnMostrar);
-    preCarga(300,2);
-    if(btnMostrar=='oculto'){
-        $("#contraE").attr("type","text");
-        $("#vContraE").attr("type","text");
-        $("#btnMostrar").attr("value","visto");
-        $("#icoMostrar").removeClass("far fa-eye fa-lg");
-        $("#icoMostrar").addClass("far fa-eye-slash fa-lg");
-    }
-    else{
-        $("#contraE").attr("type","password");
-        $("#vContraE").attr("type","password");
-        $("#btnMostrar").attr("value","oculto");
-        $("#icoMostrar").removeClass("far fa-eye-slash fa-lg");
-        $("#icoMostrar").addClass("far fa-eye fa-lg");       
-    }
-}
-
-function llenar_personaU(idPersona)
+function llenar_personaA(idPersona)
 {
-    // alert(idRepre);
-    $.ajax({
-        url : 'comboPersonasU.php',
-        // data : {'id':id},
-        type : 'POST',
-        dataType : 'html',
-        success : function(respuesta) {
-            $("#nombreE").empty();
-            $("#nombreE").html(respuesta);
-            $("#nombreE").val(idPersona);
-            $("#nombreE").select2();       
-        },
-        error : function(xhr, status) {
-            alert('Disculpe, existió un problema');
-        },
-    });
+   // alert(idRepre);
+   $.ajax({
+       url : 'comboPersonasA.php',
+       // data : {'id':id},
+       type : 'POST',
+       dataType : 'html',
+       success : function(respuesta) {
+           $("#nombreE").empty();
+           $("#nombreE").html(respuesta);  
+           $("#nombreE").val(idPersona);
+           $(".select2").select2();
+
+       },
+       error : function(xhr, status) {
+           alert('Disculpe, existió un problema');
+       },
+   });
+}
+function restaurar_contra(idUsuario){
+  var titular = "Restaurar Contraseña";
+  var mensaje = "¿Deseas restaurar la contraseña";
+  // var link    = "pdfListaPersona.php?id="+idPersona+"&datos="+datos;
+
+  alertify.confirm('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
+  alertify.confirm(
+      titular, 
+      mensaje, 
+      function(){ 
+            $.ajax({
+                url : 'restaurarContra.php',
+                data : {'idUsuario':idUsuario},
+                type : 'POST',
+                dataType : 'html',
+                success : function(respuesta) {
+                    alertify.success('Se ha restaurado la contraseña' );
+                },
+                error : function(xhr, status) {
+                    alert('Disculpe, existió un problema');
+                },
+            });
+          }, 
+      function(){ 
+              alertify.error('Cancelar') ; 
+              // console.log('cancelado')
+            }
+  ).set('labels',{ok:'Restaurar',cancel:'Cancelar'}); 
+}
+function imprimir(){
+  var titular = "Lista de Usuarios";
+  var mensaje = "¿Deseas generar un archivo con PDF oon la lista de usuarios activos";
+  // var link    = "pdfListaPersona.php?id="+idPersona+"&datos="+datos;
+  var link    = "pdfListaUsuarios.php?";
+
+  alertify.confirm('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
+  alertify.confirm(
+      titular, 
+      mensaje, 
+      function(){ 
+          window.open(link,'_blank');
+          }, 
+      function(){ 
+              alertify.error('Cancelar') ; 
+              // console.log('cancelado')
+            }
+  ).set('labels',{ok:'Generar PDF',cancel:'Cancelar'}); 
 }

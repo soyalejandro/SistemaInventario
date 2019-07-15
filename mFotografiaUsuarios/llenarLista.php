@@ -6,7 +6,7 @@ mysql_query("SET NAMES utf8");
 // Consulta a la base de datos
 $consulta=mysql_query("SELECT 
 					   id_usuario,
-					   usuario,
+					   usuario, 
 					   contra, 
 					   activo,
 					   (SELECT personas.nombre FROM personas WHERE personas.id_persona=usuarios.id_persona) AS nAlumno,

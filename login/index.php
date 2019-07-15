@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8"> 
 	<title>Login</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" type="text/css" href="../plugins/bootstrap/css/bootstrap.min.css">
@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="../plugins/alertifyjs/css/themes/bootstrap.css">
 
 	    <!-- bootstrap-toggle-master -->
-			<link href="../plugins/bootstrap-toggle-master/css/bootstrap-toggle.css" rel="stylesheet">
+	<link href="../plugins/bootstrap-toggle-master/css/bootstrap-toggle.css" rel="stylesheet">
     <link href="../plugins/bootstrap-toggle-master/stylesheet.css" rel="stylesheet">
 </head>
 <body class="login">
@@ -20,7 +20,7 @@
 		<div class="row justify-content-md-center">
 			<div class="col-md-auto login-box borde sombra">
 				<h3 class="text-center titulo">Iniciar Sesión</h3>
-				<hr style="background:red; margin:14px; height:0px;">
+				<hr>
 				<form id="frmIngreso">
 					<div class="form-row">
 						<div class="col-md-12">
@@ -41,19 +41,18 @@
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-md-12">
-												<input id="chkContra"  onchange='evaluarCheck(this.value)' data-on="Si" data-off="No" type="checkbox" checked data-toggle="toggle" data-size="mini" value='no'><label class="colorLetra"> &nbsp; Cambiar Contraseña</label>
-		              			<button type="submit" class="btn btn-login  btn-flat  pull-right" id="btnIngresar">
-			              			<i class="fas fa-lock-open"></i>
-			              			Ingresar
-		              			</button>
-	              			</div>
-	            		</div><!-- /.col -->
+								<input id="chkContra"  onchange='evaluarCheck(this.value)' data-on="Si" data-off="No" type="checkbox" checked data-toggle="toggle" data-size="mini" value='no'><label class="colorLetra"> &nbsp; Cambiar Contra</label>
+								<button type="submit" class="btn btn-login  btn-flat  pull-right" id="btnIngresar">
+									<i class="fas fa-lock-open"></i>
+									Ingresar
+								</button>
+							</div>
+						</div><!-- /.col -->
 					</div>
 				</form>
 			</div>			
 		</div>
 	</div>
-
 	<div class="container" style="display:none" id="cambiarContra">
 		<div class="row justify-content-md-center">
 			<div class="col-md-auto login-box borde sombra">
@@ -65,32 +64,32 @@
 							<input type="hidden" id="usuario" class="form-control">
 						<div class="col-md-12">
 							<label for="" class="colorLetra">Contraseña:</label>
-					          <div class="form-group has-feedback salto">
-					            <input type="password" id="vContra1"  class="form-control " >
-					            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-					          </div>
+								<div class="form-group has-feedback salto">
+									<input type="password" id="vContra1"  class="form-control"  onkeyup="verificar_pass()">
+									<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+								</div>
 						</div>
 						<div class="col-md-12">
 							<label for="" class="colorLetra">Verificar Contraseña:</label>
-					          <div class="form-group has-feedback salto">
-					            <input type="password" id="vContra1"  class="form-control " >
-					            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-					          </div>
+								<div class="form-group has-feedback salto">
+									<input type="password" id="vContra2"  class="form-control" onkeyup="verificar_pass()">
+									<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+								</div>
 						</div>
 					</div>
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-md-12">
-												<button type="button" class="btn btn-login  btn-flat  pull-left" id="btnCancelar" onclick="cancelar()">
-			              			<i class="fas fa-times"></i>
-			              			Cancelar
-		              			</button>
-		              			<button type="submit" class="btn btn-login  btn-flat  pull-right" id="btnActualizar">
-			              			<i class="fas fa-lock-open"></i>
-			              			Actualizar
-		              			</button>
-	              			</div>
-	            		</div><!-- /.col -->
+								<button type="button" class="btn btn-login  btn-flat  pull-left" id="btnCancelar" onclick="cancelar()">
+									<i class="fas fa-times"></i>
+									Cancelar
+								</button>
+								<button type="submit" class="btn btn-login  btn-flat  pull-right" id="btnActualizar" disabled="disabled">
+									<i class="fas fa-lock-open"></i>
+									Actualizar
+								</button>
+								</div>
+						</div><!-- /.col -->
 					</div>
 				</form>
 			</div>			
@@ -100,6 +99,7 @@
 	<script src="../plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	<script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
 	<script src="../plugins/Preloaders/jquery.preloaders.js"></script>
+	<script src="../plugins/voice/responsivevoice.js"></script>
 
 	<!-- alertify -->
 	<script type="text/javascript" src="../plugins/alertifyjs/alertify.js"></script>
@@ -111,15 +111,64 @@
     <script src="../js/menu.js"></script>
     <script src="../js/precarga.js"></script>
 
-		<script>
-		window.onload = function() {
-			$("#cuerpo").fadeIn("slow");
-			$("#username").focus();
-		};	
+	<script>
+	window.onload = function() {
+		$("#cuerpo").fadeIn("slow");
+		$("#username").focus();
+	};	
+	$('#chkContra').bootstrapToggle('off');
+	$('#chkContra').val('no');
 
-		$('#chkContra').bootstrapToggle('off');
-		$('#chkContra').val('no');
+	function verificar_pass(){
+		var pass1 = $('#vContra1').val();
+		var pass2 = $('#vContra2').val();
 
+		if(pass1.trim() != "" && pass2.trim() !=""){
+			if(pass1 == pass2){
+				$('#btnActualizar').removeAttr('disabled');
+			}else{
+				$('#btnActualizar').attr('disabled', 'disabled');
+			}
+		}else{
+			$('#btnActualizar').attr('disabled', 'disabled');
+		}
+	}
+	function mostrar() {
+		$('#cuerpo').hide();
+	}
+
+	$('#btnActualizar').click(function(){
+		usuario  = $('#usuario').val();
+		vContra1 = $('#vContra1').val();
+		$.ajax({
+	        url:"actualizar_pass.php",
+	        type:"POST",
+	        dateType:"html",
+	        data: {'vContra1':vContra1,'usuario':usuario},
+	        success:function(respuesta){
+	        	if(respuesta == "ok"){
+	        		alertify.set('notifier','position', 'bottom-right');
+	        		alertify.success('Se ha actualizado la contraseña' );
+	        		preCarga(2000,2);
+                    setInterval(entrando, 6000);
+	        	}else if(respuesta == "Otra"){
+	        		alertify.set('notifier','position', 'bottom-right');
+	        		alertify.error('Elige otra Contraseña' );
+	        	}else{
+					alertify.set('notifier','position', 'bottom-right');
+	        		alertify.error('La Contraseña es igual a la anterior');
+				}
+	        },
+	        error:function(xhr,status){
+	            alert(xhr);
+	        },
+
+	    });
+	    return false;
+	});
+	function entrando(){
+	    window.location='../inicio/index.php';
+	}
 	</script>
 
 

@@ -1,6 +1,5 @@
 <?php
-//se manda llamar la conexion
-include("../conexion/conexion.php");
+
     include("/verificar_sesion.php");
 	$id_usuario =  $_SESSION["idUsuario"];
 

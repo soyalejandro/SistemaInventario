@@ -1,12 +1,12 @@
 <?php
-//se manda llamar la conexion
-include("../conexion/conexion.php");
+include "../conexion/conexion.php";
 //iniciamos la sesi�n 
 session_name("loginUsuario"); 
 session_start(); 
+date_default_timezone_set('America/Monterrey');
 
 // $sMinSesion=$_SESSION["s_Sesion"];
-$sMinSesion=5;
+$sMinSesion=10;
 //**************************************************
 //se manda llamar el archivo de configuracion*******
 //include("../configuracion/configuracion.php");
@@ -26,7 +26,7 @@ else
 { 
     //sino, calculamos el tiempo transcurrido 
     $fechaGuardada = $_SESSION["ultimoAcceso"]; 
-     $ahora = date("Y-n-j H:i:s"); 
+    $ahora = date("Y-n-j H:i:s"); 
     $tiempo_transcurrido = (strtotime($ahora)-strtotime($fechaGuardada)); 
 
     //comparamos el tiempo transcurrido 
