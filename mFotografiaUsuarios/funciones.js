@@ -8,7 +8,7 @@ function llenar_lista(){
         data:{},
         success:function(respuesta){
             $("#lista").html(respuesta);
-            $("#lista").slideDown("fast");
+            $("#lista").slideDown("fast"); 
         },
         error:function(xhr,status){
             alert("no se muestra");
@@ -16,10 +16,10 @@ function llenar_lista(){
     }); 
 }
 
-function abrirModalSubir(mat){
+function abrirModalSubir(user){
    
-    $('#mat').val(mat);
-    $("#modalSubir").modal("show");
+    $('#user').val(user);
+    $("#modalSubir").modal("show"); 
 }
 
 $(document).ready(function() {
@@ -28,10 +28,10 @@ $(document).ready(function() {
         var formData = new FormData();
 
         var files = $('#image')[0].files[0];
-        var matricula=$('#mat').val();
+        var matricula=$('#user').val();
 
         formData.append('file',files);
-        formData.append('mat',matricula);
+        formData.append('user',matricula);
 
         $.ajax({
             url: 'upload.php',

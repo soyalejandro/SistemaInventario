@@ -17,7 +17,6 @@
 	<link href="../plugins/bootstrap-fileinput-master/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
 </head>
 <body>
-	<!--practica GitHub-->
 	<header>
 		<?php 
 			include('../layout/encabezado.php');
@@ -33,7 +32,7 @@
 
 			<div class="col-xs-12 col-sm-9 col-md-10 col-lg-10 cont">
 			   <div class="titulo borde sombra">
-			        <h3 class="titular">++++++Panel Inicial+++++++</h3>
+			        <h3 class="titular">Panel Inicial</h3>
 			   </div>	
 			   <div class="contenido borde sombra" style="padding-right:18px;">
 					<section id="panel">

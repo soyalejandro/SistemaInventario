@@ -1,17 +1,24 @@
 <?php
 // Conexion a la base de datos
+include'../conexion/conexion.php';
 include("../sesiones/verificar_sesion.php");
-$usuario = $_SESSION["idUsuario"];
-$sexo    = $_SESSION["sexo"];
-
+$usuario = $_SESSION["usuario"];
+$idUsuario=$_SESSION["idUsuario"];
+// Codificacion de lenguaje
+mysql_query("SET NAMES utf8");
 $foto ='../images/'.$usuario.'.jpg';
-
-if (file_exists($foto)){
+$consulta=mysql_query("SELECT 
+						 (SELECT personas.sexo FROM personas WHERE personas.id_persona=usuarios.id_persona) AS sexo
+					  	 FROM usuarios
+					   		WHERE activo = 1 AND id_usuario = '$idUsuario'",$conexion) or die (mysql_error());
+$row=mysql_fetch_row($consulta);
+$sexo= $row[0];
+if (file_exists($foto)){ 
 
 		$imagen=$foto;
 	 }else{
 			if ($sexo=='M') {
-				$imagen='../images/hombre.jpg'; 
+				$imagen='../images/hombre.jpg';
 					}
 			else{
 				$imagen='../images/mujer.jpg'; 
