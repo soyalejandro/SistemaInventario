@@ -78,11 +78,17 @@
 												<input type="text" id="correo" class="form-control " required="" placeholder="email">
 											</div>
 										</div>
+										<div class="col-xs-12 col-sm-6 col-md-7 col-lg-4">
+											<div class="form-group">
+												<label for="correo">Sede:</label>
+												<select name="id_sede" id="id_sede" class="select2" style="width:100%"></select>
+											</div>
+										</div>
 										<div class="col-xs-12 col-sm-6 col-md-5 col-lg-4">
 											<div class="form-group">
 												<label for="tipo">Tipo de persona:</label>
 												<select  id="tipo" class="select2 form-control " style="width: 100%">
-													<option value="estudiante">Estudiante</option>
+													<option value="estudiante">Paciente</option>
 													<option value="trabajador">Trabajador</option>
 												</select>
 											</div>
@@ -97,15 +103,7 @@
 									</div>
             		</form>
 				      </section>
-							<section id="lista">
-								
-							</section>
-							 <section id="cambioPass">
-
-							</section>
-							<section id="miFoto">
-
-							</section> 
+							<section id="lista"></section>
 				    </div>
 			   </div>	
 				</div>			
@@ -180,11 +178,17 @@
 										<input type="text" id="correoE" class="form-control " required="" placeholder="email">
 									</div>
 								</div>
+								<div class="col-xs-12 col-sm-6 col-md-7 col-lg-4">
+											<div class="form-group">
+												<label for="correo">Sede:</label>
+												<select name="id_sedeE" id="id_sedeE" class="select2" style="width:100%"></select>
+											</div>
+										</div>
 								<div class="col-xs-12 col-sm-6 col-md-5 col-lg-4">
 									<div class="form-group">
 										<label for="tipoE">Tipo de persona:</label>
 										<select  id="tipoE" class="select2 form-control " style="width: 100%">
-											<option value="estudiante">Estudiante</option>
+											<option value="estudiante">Paciente</option>
 											<option value="trabajador">Trabajador</option>
 										</select>
 									</div>
@@ -206,6 +210,5 @@
 		</div>
 		<!-- Modal -->
 		<?php include('../footer.php');?> 
-		 <script src="../js/inicio.js"></script>
 	</body>
 </html>

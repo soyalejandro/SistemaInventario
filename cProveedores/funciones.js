@@ -15,49 +15,13 @@ function llenar_lista(){
         }
     });	
 }
-function llenar_sede()
-{
-   $.ajax({
-       url : 'comboSedes.php',
-       // data : {'id':id},
-       type : 'POST',
-       dataType : 'html',
-       success : function(respuesta) {
-           $("#id_sede").empty();
-           $("#id_sede").html(respuesta);      
-       },
-       error : function(xhr, status) {
-           alert('Disculpe, existió un problema');
-       },
-   });
-}
-function llenar_sedeA(id_sede)
-{
-     // alert(idRepre);
-     $.ajax({
-        url : 'comboSedesA.php',
-        // data : {'id':id},
-        type : 'POST',
-        dataType : 'html',
-        success : function(respuesta) {
-            $("#id_sedeE").empty();
-            $("#id_sedeE").html(respuesta);  
-            $("#id_sedeE").val(id_sede);
-            $(".select2").select2();
- 
-        },
-        error : function(xhr, status) {
-            alert('Disculpe, existió un problema');
-        },
-    });
-}
+
 function ver_alta(){
     preCarga(800,4);
     $("#lista").slideUp('low');
     $("#alta").slideDown('low');
     $("#frmAlta")[0].reset();
-    $("#nombre").focus();
-    llenar_sede();
+    $("#nomProv").focus();
 }
 
 function ver_lista(){
@@ -72,46 +36,21 @@ $('#btnLista').on('click',function(){
 
 $("#frmAlta").submit(function(e){
   
-    var nombre    = $("#nombre").val();
-    var paterno   = $("#paterno").val();
-    var materno   = $("#materno").val();
+    var nomProv    = $("#nomProv").val();
+    var nomAge   = $("#nomAge").val();
     var direccion = $("#direccion").val();
-    var sexo      = $("#sexo").val();
     var telefono  = $("#telefono").val();
-    var fecha_nac = $("#fecha_nac").val();
     var correo    = $("#correo").val();
-    var tipo      = $("#tipo").val();
-    var id_sede      = $("#id_sede").val();
-
-    if(id_sede==0){
-        alertify.dialog('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
- 
-        alertify.alert()
-        .setting({
-            'title':'Información',
-            'label':'Salir',
-            'message': 'Debes seleccionar una sede.' ,
-            'onok': function(){ alertify.message('Gracias !');}
-        }).show();
-        $("#id_sede").focus();
-        return false;       
-    }
-
     $.ajax({
         url:"guardar.php",
         type:"POST",
         dateType:"html",
         data:{
-            'nombre':nombre,
-            'paterno':paterno,
-            'materno':materno,
+            'nomProv':nomProv,
+            'nomAge':nomAge,
             'direccion':direccion,
-            'sexo':sexo,
             'telefono':telefono,
-            'fecha_nac':fecha_nac,
-            'correo':correo,
-            'tipo':tipo,
-            'id_sede':id_sede
+            'correo':correo
         },
         success:function(respuesta){
             if(respuesta == "ok"){
@@ -136,61 +75,45 @@ $("#frmAlta").submit(function(e){
     return false;
 });
 
-function abrirModalEditar(nombre,paterno,materno,direccion,telefono,fecha_nac,correo,tipo,sexo,ide,id_sede){
+function abrirModalEditar(nomProv,nomAge,telefono,correo,direccion,ide){
    
     $("#frmActuliza")[0].reset();
-    $("#nombreE").val(nombre);
-    $("#paternoE").val(paterno);
-    $("#maternoE").val(materno);
-    $("#direccionE").val(direccion);
+    $("#nomProvE").val(nomProv);
+    $("#nomAgeE").val(nomAge);
     $("#telefonoE").val(telefono);
-    $("#fecha_nacE").val(fecha_nac);
     $("#correoE").val(correo);
-    $("#tipoE").val(tipo);
-    $("#sexoE").val(sexo);
+    $("#direccionE").val(direccion);
     $("#idE").val(ide);
-
-    llenar_sedeA(id_sede);
 
     $(".select2").select2();
 
     $("#modalEditar").modal("show");
 
      $('#modalEditar').on('shown.bs.modal', function () {
-        $('#nombreE').focus();
+        $('#nomProvE').focus();
      });   
 }
 
 $("#frmActuliza").submit(function(e){
   
-    var nombre    = $("#nombreE").val();
-    var paterno   = $("#paternoE").val();
-    var materno   = $("#maternoE").val();
-    var direccion = $("#direccionE").val();
-    var sexo      = $("#sexoE").val();
+    var nomProv    = $("#nomProvE").val();
+    var nomAge   = $("#nomAgeE").val();
     var telefono  = $("#telefonoE").val();
-    var fecha_nac = $("#fecha_nacE").val();
     var correo    = $("#correoE").val();
-    var tipo      = $("#tipoE").val();
+    var direccion = $("#direccionE").val();
     var ide       = $("#idE").val();
-    var id_sede   = $("#id_sedeE").val();
 
     $.ajax({
         url:"actualizar.php",
         type:"POST",
         dateType:"html",
         data:{
-            'nombre':nombre,
-            'paterno':paterno,
-            'materno':materno,
-            'direccion':direccion,
-            'sexo':sexo,
+            'nomProv':nomProv,
+            'nomAge':nomAge,
             'telefono':telefono,
-            'fecha_nac':fecha_nac,
             'correo':correo,
-            'tipo':tipo,
-            'ide':ide,
-            'id_sede':id_sede
+            'direccion':direccion,
+            'ide':ide
         },
         success:function(respuesta){
             if(respuesta == "ok"){
@@ -199,10 +122,9 @@ $("#frmActuliza").submit(function(e){
                 $("#frmActuliza")[0].reset();
                 $("#modalEditar").modal("hide");
                 llenar_lista();
-                llenar_sede();
             }else{
                 alertify.set('notifier','position', 'bottom-right');
-                alertify.error('Registro Duplicado');
+                alertify.error('Nombre Provedor  Duplicado');
             }
         },
         error:function(xhr,status){
@@ -218,10 +140,10 @@ function status(concecutivo,id){
     var nomBoton  = "#boton"+concecutivo;
     var numero    = "#tConsecutivo"+concecutivo;
     var persona   = "#tPersona"+concecutivo;
-    var correo    = "#tCorreo"+concecutivo;
+    var agencia    = "#tAgencia"+concecutivo;
     var telefono  = "#tTelefono"+concecutivo;
-    var sexo      = "#tSexo"+concecutivo;
-    var sede      = "#tSede"+concecutivo;
+    var correo      = "#tCorreo"+concecutivo;
+    var direccion      = "#tDireccion"+concecutivo;
 
     if( $(nomToggle).is(':checked') ) {
         // console.log("activado");
@@ -230,10 +152,10 @@ function status(concecutivo,id){
         $(nomBoton).removeAttr("disabled");
         $(numero).removeClass("desabilita");
         $(persona).removeClass("desabilita");
-        $(correo).removeClass("desabilita");
+        $(agencia).removeClass("desabilita");
         $(telefono).removeClass("desabilita");
-        $(sexo).removeClass("desabilita");
-        $(sede).removeClass("desabilita");
+        $(correo).removeClass("desabilita");
+         $(direccion).removeClass("desabilita");
     }else{
         console.log("desactivado");
         var valor=1;
@@ -241,10 +163,10 @@ function status(concecutivo,id){
         $(nomBoton).attr("disabled", "disabled");
         $(numero).addClass("desabilita");
         $(persona).addClass("desabilita");
-        $(correo).addClass("desabilita");
+        $(agencia).addClass("desabilita");
         $(telefono).addClass("desabilita");
-        $(sexo).addClass("desabilita");
-        $(sede).addClass("desabilita");
+        $(correo).addClass("desabilita");
+        $(direccion).addClass("desabilita");
     }
     // console.log(concecutivo+' | '+id);
     $.ajax({
@@ -263,12 +185,12 @@ function status(concecutivo,id){
         },
     });
 }
-function imprimir(){
+function imprimir(valor){
 
-        var titular = "Lista de Personas";
-        var mensaje = "¿Deseas generar un archivo con PDF oon la lista de personas activos";
+        var titular = "Lista de Provedores";
+        var mensaje = "¿Deseas generar un archivo con PDF con la lista de Provedores activos";
 
-    var link    = "pdfListaPersona.php";
+    var link    = "pdfListaProveedor.php?valor="+valor;
 
     alertify.confirm('alert').set({transition:'zoom',message: 'Transition effect: zoom'}).show();
     alertify.confirm(

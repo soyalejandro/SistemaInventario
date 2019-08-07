@@ -12,6 +12,7 @@
 	$correo    = $_POST["correo"];
 	$tipo      = $_POST["tipo"];
 	$sexo      = $_POST["sexo"];
+	$id_sede   = $_POST["id_sede"];
 
 	$nombre    = trim($nombre);
 	$paterno   = trim($paterno);
@@ -22,6 +23,7 @@
 	$correo    = trim($correo);
 	$tipo      = trim($tipo);
 	$sexo      = trim($sexo);
+	$id_sede   = trim($id_sede);
 
 	$fecha=date("Y-m-d"); 
 	$hora=date ("H:i:s");
@@ -46,7 +48,8 @@
 									id_registro,
 									fecha_registro,
 									hora_registro,
-									activo
+									activo,
+									id_sede
 									)
 								VALUES
 									(
@@ -62,7 +65,8 @@
 									'$id_usuario',
 									'$fecha',
 									'$hora',
-									'1'
+									'1',
+									'$id_sede'
 									)
 								",$conexion)or die(mysql_error());
 		echo "ok";

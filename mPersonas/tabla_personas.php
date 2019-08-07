@@ -18,7 +18,8 @@
                                 tipo_persona,
                                 nombre,
                                 ap_paterno,
-                                ap_materno
+                                ap_materno,
+                                (SELECT nombre FROM sedes WHERE sedes.id_sede = personas.id_sede)
                             FROM
                                 personas",$conexion) or die (mysql_error());
     // $row=mysql_fetch_row($consulta)
