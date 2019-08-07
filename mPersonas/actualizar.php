@@ -13,16 +13,17 @@
 	$tipo      = $_POST["tipo"];
 	$sexo      = $_POST["sexo"];
 	$ide       = $_POST["ide"];
+	$id_sede   = $_POST["id_sede"];
 
 	$nombre    = trim($nombre);
 	$paterno   = trim($paterno);
 	$materno   = trim($materno);
-	$fecha_nac =trim($fecha_nac);
 	$direccion = trim($direccion);
 	$telefono  = trim($telefono);
 	$correo    = trim($correo);
 	$tipo      = trim($tipo);
 	$sexo      = trim($sexo);
+	$id_sede   = trim($id_sede);
 
 	$fecha=date("Y-m-d"); 
 	$hora=date ("H:i:s");
@@ -43,6 +44,7 @@
 								fecha_nacimiento='$fecha_nac',
 								correo='$correo',
 								tipo_persona='$tipo',
+								id_sede = '$id_sede',
 								fecha_registro='$fecha',
 								hora_registro='$hora',
 								id_registro='$id_usuario'

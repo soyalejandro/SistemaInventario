@@ -3,15 +3,15 @@
 include'../conexion/conexion.php'; 
 include'../funcionesPHP/fechaEspanol.php'; 
 include'../funcionesPHP/calcularEdad.php';
-
         
 mysql_query("SET NAMES utf8");
 $consulta=mysql_query("SELECT
                         CONCAT(nombre,' ',ap_paterno,' ',ap_materno) AS Nombre,
                         IF(sexo='M','Masculino','Femenino') AS Genero,
                         correo,
-                        IF(tipo_persona='trabajador','Trabajador','Estudiante') AS tipo,
-                        fecha_nacimiento
+                        tipo_persona,
+                        fecha_nacimiento,
+                        (SELECT nombre FROM sedes WHERE sedes.id_sede = personas.id_sede)
                         FROM
                         personas WHERE activo=1".$filtro,$conexion) or die (mysql_error());
    
@@ -115,16 +115,17 @@ $fechaEspanol=fechaCastellano($fecha);
     <col style="width: 8%">
     <col style="width: 8%">
     <col style="width: 8%">
+    <col style="width: 8%">
     <!-- defino el ancho de la tabla -->
     <tr border="0">
-        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr >
         <td  colspan="12" class="encabezado">
-            Lista de Personas
+            REPORTE PERSONAS
         </td>
     </tr> 
-    <tr>
+    <tr >
         <td  colspan="1" class="titular">
             #
         </td>
@@ -134,10 +135,13 @@ $fechaEspanol=fechaCastellano($fecha);
         <td  colspan="1" class="titular">
             Edad
         </td>
-        <td  colspan="4" class="titular">
+        <td  colspan="3" class="titular">
             Correo
         </td>
-        <td  colspan="3    " class="titular">
+        <td  colspan="2" class="titular">
+            Sede
+        </td>
+        <td  colspan="2" class="titular">
             Tipo
         </td>
     </tr>
@@ -150,6 +154,7 @@ $fechaEspanol=fechaCastellano($fecha);
             $correo = $row[2];
             $tipo   = $row[3];
             $edad   = CalculaEdad($row[4]); 
+            $sede   = $row[5];
     ?>
         <tr >
             <td  colspan="1" class="borde">
@@ -167,12 +172,17 @@ $fechaEspanol=fechaCastellano($fecha);
                     <?php echo $edad; ?>
                 </p>
             </td>
-            <td  colspan="4" class="borde">
+            <td  colspan="3" class="borde">
                 <p class="parrafo">
                     <?php echo $correo; ?>
                 </p>
             </td>
-            <td  colspan="3" class="borde">
+            <td  colspan="2" class="borde">
+                <p class="parrafo">
+                    <?php echo $sede; ?>
+                </p>
+            </td>
+            <td  colspan="2" class="borde">
                 <p class="parrafo">
                     <?php echo $tipo; ?>
                 </p>
@@ -196,9 +206,10 @@ $fechaEspanol=fechaCastellano($fecha);
     <col style="width: 10%">
     <col style="width: 10%">
     <col style="width: 10%">
+    <col style="width: 10%">
     <!-- defino el ancho de la tabla -->
     <tr border="0">
-        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr >
         <td  colspan="10" class="fecha">

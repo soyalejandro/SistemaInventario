@@ -3,30 +3,16 @@
 include'../conexion/conexion.php'; 
 include'../funcionesPHP/fechaEspanol.php'; 
 include'../funcionesPHP/calcularEdad.php';
-
-// $Id=$_GET['id'];
-// $idDatos=$_GET['datos'];
         
 mysql_query("SET NAMES utf8");
 $consulta=mysql_query("SELECT
-    (
-        SELECT
-            CONCAT(
-                personas.nombre,
-                ' ',
-                personas.ap_paterno,
-                ' ',
-                ap_materno
-            )
-        FROM
-            personas
-        WHERE
-            personas.id_persona = usuarios.id_persona
-    ),usuario
-FROM
-    usuarios
-WHERE
-    activo = '1'",$conexion) or die (mysql_error());
+                       nombre_proveedor,
+                       nombre_agencia,
+                       telefono,
+                       correo,
+                       direccion
+                        FROM
+                        proveedor WHERE activo=1".$filtro,$conexion) or die (mysql_error());
    
 //Descargamos el arreglo que arroja la consulta
 $n=1;
@@ -117,42 +103,67 @@ $fechaEspanol=fechaCastellano($fecha);
 </table>
 
 <table border="0">
-    <col style="width: 10%">
-    <col style="width: 10%">
-    <col style="width: 10%">
-    <col style="width: 10%">
-    <col style="width: 10%">
-    <col style="width: 10%">
-    <col style="width: 10%">
-    <col style="width: 10%">
-    <col style="width: 10%">
-    <col style="width: 10%">
+    <col style="width: 8%">
+    <col style="width: 8%">
+    <col style="width: 8%">
+    <col style="width: 8%">
+    <col style="width: 8%">
+    <col style="width: 8%">
+    <col style="width: 8%">
+    <col style="width: 8%">
+    <col style="width: 8%">
+    <col style="width: 8%">
+    <col style="width: 8%">
+    <col style="width: 8%">
     <!-- defino el ancho de la tabla -->
     <tr border="0">
-        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr >
-        <td  colspan="10" class="encabezado">
-            LISTA DE USUARIOS
+        <td  colspan="12" class="encabezado">
+            Reporte Proveedor
         </td>
     </tr> 
     <tr >
         <td  colspan="1" class="titular">
             #
         </td>
-        <td  colspan="5" class="titular">
-            Nombre
+        <td  colspan="2" class="titular">
+            Nombre Proveedor
         </td>
-        <td  colspan="4" class="titular">
-            Usuario
+        <td  colspan="2" class="titular">
+            Nombre Agencia
+        </td>
+        <td  colspan="2" class="titular">
+            Telefono
+        </td>
+        <td  colspan="3" class="titular">
+            Correo
+        </td>
+        <td  colspan="2" class="titular">
+            Dirreccion
         </td>
     </tr>
 
     <?php
         $n=1;
         while($row=mysql_fetch_row($consulta)){
-            $nombre  = $row[0];
-            $usuario = $row[1];
+            $nombreProveedor = $row[0];
+            $nombreAgencia = $row[1];
+            $telefono = $row[2];
+            $correo   = $row[3];
+            $dirreccion  =$row[4]; 
     ?>
         <tr >
             <td  colspan="1" class="borde">
@@ -160,14 +171,29 @@ $fechaEspanol=fechaCastellano($fecha);
                     <?php echo $n; ?>
                 </p>
             </td>
-            <td  colspan="5" class="borde">
+            <td  colspan="2" class="borde">
                 <p class="parrafo">
-                    <?php echo $nombre; ?>
+                    <?php echo $nombreProveedor; ?>
                 </p>
             </td>
-            <td  colspan="4" class="borde">
+            <td  colspan="2" class="borde">
                 <p class="parrafo">
-                    <?php echo $usuario; ?>
+                    <?php echo $nombreAgencia; ?>
+                </p>
+            </td>
+            <td  colspan="2" class="borde">
+                <p class="parrafo">
+                    <?php echo $telefono; ?>
+                </p>
+            </td>
+            <td  colspan="3" class="borde">
+                <p class="parrafo">
+                    <?php echo $correo; ?>
+                </p>
+            </td>
+            <td  colspan="2" class="borde">
+                <p class="parrafo">
+                    <?php echo $dirreccion; ?>
                 </p>
             </td>
         </tr>
@@ -195,12 +221,12 @@ $fechaEspanol=fechaCastellano($fecha);
         <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr >
-        <td  colspan="10" class="fecha">
+        <td  colspan="12" class="fecha">
             <strong><?php echo "$fechaEspanol"; ?></strong>
         </td>
     </tr> 
     <tr>
-        <td  colspan="10" align="center">
+        <td  colspan="12" align="center">
             <hr>
         </td>
     </tr>
