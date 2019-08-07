@@ -8,7 +8,7 @@ if (is_array($_FILES) && count($_FILES) > 0) {
             echo "../images/".$usuario;
         } else {
             echo 0;
-        } 
+        }
     } else {
         echo 0;
     }

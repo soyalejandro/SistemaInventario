@@ -133,7 +133,7 @@ $fechaEspanol=fechaCastellano($fecha);
     </tr>
     <tr >
         <td  colspan="10" class="encabezado">
-            LISTA DE USUARIOS
+            REPORTE DE USUARIOS
         </td>
     </tr> 
     <tr >

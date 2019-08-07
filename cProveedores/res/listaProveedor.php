@@ -6,14 +6,13 @@ include'../funcionesPHP/calcularEdad.php';
         
 mysql_query("SET NAMES utf8");
 $consulta=mysql_query("SELECT
-                        CONCAT(nombre,' ',ap_paterno,' ',ap_materno) AS Nombre,
-                        IF(sexo='M','Masculino','Femenino') AS Genero,
-                        correo,
-                        tipo_persona,
-                        fecha_nacimiento,
-                        (SELECT nombre FROM sedes WHERE sedes.id_sede = personas.id_sede)
+                       nombre_proveedor,
+                       nombre_agencia,
+                       telefono,
+                       correo,
+                       direccion
                         FROM
-                        personas WHERE activo=1".$filtro,$conexion) or die (mysql_error());
+                        proveedor WHERE activo=1".$filtro,$conexion) or die (mysql_error());
    
 //Descargamos el arreglo que arroja la consulta
 $n=1;
@@ -118,43 +117,53 @@ $fechaEspanol=fechaCastellano($fecha);
     <col style="width: 8%">
     <!-- defino el ancho de la tabla -->
     <tr border="0">
-        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
     <tr >
         <td  colspan="12" class="encabezado">
-            REPORTE PERSONAS
+            Reporte Proveedor
         </td>
     </tr> 
     <tr >
         <td  colspan="1" class="titular">
             #
         </td>
-        <td  colspan="3" class="titular">
-            Nombre
+        <td  colspan="2" class="titular">
+            Nombre Proveedor
         </td>
-        <td  colspan="1" class="titular">
-            Edad
+        <td  colspan="2" class="titular">
+            Nombre Agencia
+        </td>
+        <td  colspan="2" class="titular">
+            Telefono
         </td>
         <td  colspan="3" class="titular">
             Correo
         </td>
         <td  colspan="2" class="titular">
-            Sede
-        </td>
-        <td  colspan="2" class="titular">
-            Tipo
+            Dirreccion
         </td>
     </tr>
 
     <?php
         $n=1;
         while($row=mysql_fetch_row($consulta)){
-            $nombre = $row[0];
-            $genero = $row[1];
-            $correo = $row[2];
-            $tipo   = $row[3];
-            $edad   = CalculaEdad($row[4]); 
-            $sede   = $row[5];
+            $nombreProveedor = $row[0];
+            $nombreAgencia = $row[1];
+            $telefono = $row[2];
+            $correo   = $row[3];
+            $dirreccion  =$row[4]; 
     ?>
         <tr >
             <td  colspan="1" class="borde">
@@ -162,14 +171,19 @@ $fechaEspanol=fechaCastellano($fecha);
                     <?php echo $n; ?>
                 </p>
             </td>
-            <td  colspan="3" class="borde">
+            <td  colspan="2" class="borde">
                 <p class="parrafo">
-                    <?php echo $nombre; ?>
+                    <?php echo $nombreProveedor; ?>
                 </p>
             </td>
-            <td  colspan="1" class="borde">
+            <td  colspan="2" class="borde">
                 <p class="parrafo">
-                    <?php echo $edad; ?>
+                    <?php echo $nombreAgencia; ?>
+                </p>
+            </td>
+            <td  colspan="2" class="borde">
+                <p class="parrafo">
+                    <?php echo $telefono; ?>
                 </p>
             </td>
             <td  colspan="3" class="borde">
@@ -179,12 +193,7 @@ $fechaEspanol=fechaCastellano($fecha);
             </td>
             <td  colspan="2" class="borde">
                 <p class="parrafo">
-                    <?php echo $sede; ?>
-                </p>
-            </td>
-            <td  colspan="2" class="borde">
-                <p class="parrafo">
-                    <?php echo $tipo; ?>
+                    <?php echo $dirreccion; ?>
                 </p>
             </td>
         </tr>
@@ -212,12 +221,12 @@ $fechaEspanol=fechaCastellano($fecha);
         <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr >
-        <td  colspan="10" class="fecha">
+        <td  colspan="12" class="fecha">
             <strong><?php echo "$fechaEspanol"; ?></strong>
         </td>
     </tr> 
     <tr>
-        <td  colspan="10" align="center">
+        <td  colspan="12" align="center">
             <hr>
         </td>
     </tr>

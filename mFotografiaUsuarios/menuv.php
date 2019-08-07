@@ -12,7 +12,7 @@
 							<a href="../inicio/index.php"><i class="fas fa-home"></i> <label class="modulo">	Inicio</label></a>
 						</li>
 						<li class="list-unstyled icoMedia">
-							<a href="../mCarreras/index.php"><i class="fas fa-unlock-alt"></i> <label class="modulo">	Cambiar Contraseña</label></a></a>
+							<a href="#"   id="linkCambioPass" ><i class="fas fa-unlock-alt"></i> <label class="modulo">	Cambiar Contraseña</label></a></a>
 						</li>
 						<li class="list-unstyled icoMedia modulo">
 							<a href="#" onclick="salir();"><i class="fas fa-sign-out-alt"></i> <label class="modulo">	Salir</label></a></a>

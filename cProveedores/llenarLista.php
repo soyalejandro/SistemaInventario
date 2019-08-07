@@ -6,23 +6,16 @@
 	mysql_query("SET NAMES utf8");
 
 	// Consulta a la base de datos
-	$consulta=mysql_query("SELECT
-								id_persona,
-								activo,
-								CONCAT(ap_paterno,' ',ap_materno,' ',nombre) AS Persona,
-								sexo,
-								direccion,
-								telefono,
-								fecha_nacimiento,
-								correo,
-								tipo_persona,
-								nombre,
-								ap_paterno,
-								ap_materno,
-								id_sede,
-								(SELECT nombre FROM sedes WHERE sedes.id_sede = personas.id_sede)
+	$consulta=mysql_query("SELECT	id_proveedor,
+									activo,
+									nombre_proveedor,
+									nombre_agencia,
+									telefono,
+									correo,
+									direccion
+									
 							FROM
-								personas",$conexion) or die (mysql_error());
+								proveedor",$conexion) or die (mysql_error());
 	// $row=mysql_fetch_row($consulta)
  ?>
 	<div class="table-responsive">
@@ -31,10 +24,10 @@
 				<tr class="info" >
 					<th>#</th>
 					<th>Nombre</th>
-					<th>Correo</th>
+					<th>Agencia</th>
 					<th>Telefono</th>
-					<th>Genero</th>
-					<th>Sede</th>
+					<th>Correo</th>
+					<th>Dirrecion</th>
 					<th>Editar</th>
 					<th>Estatus</th>
 				</tr>
@@ -43,22 +36,13 @@
 				<?php 
 					$n=1;
 					while ($row=mysql_fetch_row($consulta)) {
-						$idPersona   = $row[0];
-						$activo      = $row[1];
-						$nomPersona  = $row[2];
-						$sexo        = $row[3];
-						$direccion   = $row[4];
-						$telefono    = $row[5];
-						$fecha_nac   = $row[6];
-						$correo      = $row[7];
-						$tipoPersona = $row[8];
-						$nombre      = $row[9];
-						$paterno     = $row[10];
-						$materno     = $row[11];
-						$genero      = $row[3];				
-						$id_sede     = $row[12];	
-						$nombre_sede = $row[13];	
-						$sexo=($sexo=='M')?'<i class="fas fa-male fa-lg"></i>':'<i class="fas fa-female fa-lg"></i>';
+						$idProvedor   = $row[0];
+						$activo	= $row[1];
+						$nomProv      = $row[2];
+						$nomAge  = $row[3];
+						$telefono    = $row[4];
+						$correo      = $row[5];
+						$direccion   = $row[6];
 						$checado=($activo==1)?'checked':'';		
 						$desabilitar=($activo==0)?'disabled':'';
 						$claseDesabilita=($activo==0)?'desabilita':'';
@@ -71,12 +55,12 @@
 					</td>
 					<td>
 						<p id="<?php echo "tPersona".$n; ?>" class="<?php echo $claseDesabilita; ?>">
-							<?php echo $nomPersona; ?>
+							<?php echo $nomProv; ?>
 						</p>
 					</td>
 					<td>
-						<p id="<?php echo "tCorreo".$n; ?>" class="<?php echo $claseDesabilita; ?>">
-							<?php echo $correo; ?>
+						<p id="<?php echo "tAgencia".$n; ?>" class="<?php echo $claseDesabilita; ?>">
+							<?php echo $nomAge; ?>
 						</p>
 					</td>
 					<td>
@@ -85,35 +69,30 @@
 						</p>
 					</td>
 					<td>
-						<p id="<?php echo "tSexo".$n; ?>" class="<?php echo $claseDesabilita; ?>">
-							<?php echo $sexo; ?>
-						</p>	
+						<p id="<?php echo "tCorreo".$n; ?>"  class="<?php echo $claseDesabilita; ?>">
+							<?php echo $correo; ?>
+						</p>
 					</td>
 					<td>
-						<p id="<?php echo "tSede".$n; ?>" class="<?php echo $claseDesabilita; ?>">
-							<?php echo $nombre_sede; ?>
-						</p>	
+						<p id="<?php echo "tDireccion".$n; ?>"  class="<?php echo $claseDesabilita; ?>">
+							<?php echo $direccion; ?>
+						</p>
 					</td>
 					<td>
 						<button id="<?php echo "boton".$n; ?>" <?php echo $desabilitar ?>  type="button" class="btn btn-login btn-sm" 
 							onclick="abrirModalEditar(
-												'<?php echo $nombre ?>',
-												'<?php echo $paterno ?>',
-												'<?php echo $materno ?>',
-												'<?php echo $direccion ?>',
+												'<?php echo $nomProv ?>',
+												'<?php echo $nomAge ?>',
 												'<?php echo $telefono ?>',
-												'<?php echo $fecha_nac ?>',
 												'<?php echo $correo ?>',
-												'<?php echo $tipoPersona ?>',
-												'<?php echo $genero ?>',
-												'<?php echo $idPersona ?>',
-												'<?php echo $id_sede ?>'
+												'<?php echo $direccion ?>',
+												'<?php echo $idProvedor?>'
 												);">
 							<i class="far fa-edit"></i>
 						</button>
 					</td>
 					<td>
-						<input  data-size="small" data-style="android" value="<?php echo "$valor"; ?>" type="checkbox" <?php echo "$checado"; ?>  id="<?php echo "interruptor".$n; ?>"  data-toggle="toggle" data-on="Desactivar" data-off="Activar" data-onstyle="danger" data-offstyle="success" class="interruptor" data-width="100" onchange="status(<?php echo $n; ?>,<?php echo $idPersona; ?>);">
+						<input  data-size="small" data-style="android" value="<?php echo "$valor"; ?>" type="checkbox" <?php echo "$checado"; ?>  id="<?php echo "interruptor".$n; ?>"  data-toggle="toggle" data-on="Desactivar" data-off="Activar" data-onstyle="danger" data-offstyle="success" class="interruptor" data-width="100" onchange="status(<?php echo $n; ?>,<?php echo $idProvedor; ?>);">
 					</td>
 				</tr>
 				<?php
@@ -125,10 +104,10 @@
 				<tr class="info">
 					<th>#</th>
 					<th>Nombre</th>
-					<th>Correo</th>
+					<th>Agencia</th>
 					<th>Telefono</th>
-					<th>Genero</th>
-					<th>Sede</th>
+					<th>Correo</th>
+					<th>Dirrecion</th>
 					<th>Editar</th>
 					<th>Estatus</th>
 				</tr>
@@ -158,11 +137,11 @@
 						// visible: false
 				}],
 				buttons: [
-					{
-						extend: 'pageLength',
-						text: 'Registros',
-						className: 'btn btn-default'
-					},
+					// {
+					// 	extend: 'pageLength',
+					// 	text: 'Registros',
+					// 	className: 'btn btn-default'
+					// },
 					{
 						extend: 'excel',
 						text: 'Exportar a Excel',
@@ -173,7 +152,7 @@
 						}
 					},
 					{
-						text: 'Nueva Persona',
+						text: 'Nueva Proveedor',
 						action: function (  ) {
 							ver_alta();
 						},

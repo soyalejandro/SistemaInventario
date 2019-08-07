@@ -16,8 +16,7 @@ $contraMD5 = md5($contra);
                                 personas.ap_materno,
                                 CONCAT(personas.nombre,' ',personas.ap_paterno,' ',personas.ap_materno)as NomPersona,
                                 personas.id_persona,
-                                usuarios.pvez,
-                                personas.sexo
+                                usuarios.pvez
                             FROM
                                 usuarios
                             INNER JOIN personas ON usuarios.id_persona = personas.id_persona
@@ -56,6 +55,5 @@ $contraMD5 = md5($contra);
     $_SESSION["idUsuario"]= $row[0]; //ID del usuario
     $_SESSION["idPersona"]= $row[7]; //ID de persona
     $_SESSION["usuario"]= $row[1]; //usuario
-    $_SESSION["sexo"]= $row[9]; //usuario
-
+    $_SESSION["contra"]= $row[3]; //contra
 ?> 

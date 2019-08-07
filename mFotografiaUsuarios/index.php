@@ -6,8 +6,8 @@ $titulo="Cargar la fotografía de usuarios";
 $opcionMenu="A";
  ?>
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"> 
+<head> 
 	<meta charset="UTF-8">
 	<title>Plantilla</title>
  
@@ -67,6 +67,12 @@ $opcionMenu="A";
 				        <section id="lista">
             
 				        </section>
+				        <section id="cambioPass">
+
+						</section>
+						<section id="miFoto">
+
+						</section> 
 				    </div>
 			   </div>	
 
@@ -95,7 +101,7 @@ $opcionMenu="A";
 				<div class="form-group">
 				<!-- <label for="image">Nueva imagen</label> -->
 				<input type="file" class="form-control-file" name="image" id="image">
-				<input type="hidden" class="form-control-file" name="mat" id="mat">
+				<input type="hidden" class="form-control-file" name="user" id="user">
 				
           </div>
 	      </div>
@@ -152,6 +158,7 @@ $opcionMenu="A";
     <script src="funciones.js"></script>
     <script src="../js/menu.js"></script>
     <script src="../js/precarga.js"></script>
+    <script src="../js/inicio.js"></script>
 		<script src="../js/salir.js"></script>
 
     <!-- LLAMADAS A FUNCIONES E INICIALIZACION DE COMPONENTES -->
@@ -167,7 +174,7 @@ $opcionMenu="A";
         $(".select2").select2();
         
       });
-    </script> 
+    </script>  
 
 	<script>
 		var letra ='<?php echo $opcionMenu; ?>';
