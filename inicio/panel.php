@@ -3,9 +3,9 @@
 
 		<div class="panel-group" id="accordion" role="tablist">
 			<div class="panel panel-color">
-				<div class="panel-heading" role="tab" id="heading1">
+				<div class="panel-heading" role="tab" id="heading">
 					<h4 class="panel-title">
-						<a href="#collapse1" data-toggle="collapse" data-parent="#accordion">
+						<a href="#collapse1" data-toggle="collapse" data-parent="#accordion1">
 							Administración del sistema.
 						</a>				
 					</h4>
@@ -40,13 +40,37 @@
 								</p>
 							</div>
 						</div>
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+							<div class="caja">
+								<i class="fas fa-user-alt"></i>
+								<p>
+									<a href="../dTrabajadores/index.php">Trabajadores</a>
+								</p>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+							<div class="caja">
+								<i class="fas fa-user-md"></i>
+								<p>
+									<a href="../dTipoTrabajador/index.php">Tipo de Trabajadores</a>
+								</p>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+							<div class="caja">
+								<i class="fas fa-hospital"></i>
+								<p>
+									<a href="../cSedes/index.php">Sedes</a>
+								</p>
+							</div>
+						</div>
 
 					</div>
 				</div>				
 			</div>
 		</div>
 
-		<div class="panel-group" id="accordion" role="tablist">
+		<div class="panel-group" id="accordion1" role="tablist">
 			<div class="panel panel-color">
 				<div class="panel-heading" role="tab" id="heading1">
 					<h4 class="panel-title">
@@ -62,7 +86,7 @@
 							<div class="caja">
 								<i class=" 	far fa-address-card"></i>
 								<p>
-									<a href="../mProveedores/index.php">Proveedor</a>
+									<a href="../cProveedores/index.php">Proveedores</a>
 								</p>
 							</div>
 						</div> 
@@ -70,23 +94,7 @@
 							<div class="caja">
 								<i class="fas fa-book-medical"></i>
 								<p>
-									<a href="../mMedicamentos/index.php">Medicamentos</a>
-								</p>
-							</div>
-						</div>
-						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
-							<div class="caja">
-								<i class="fas fa-truck"></i>
-								<p>
-					 				<a href="">Pedido proveedor </a>
-								</p>
-							</div>
-						</div>
-						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
-							<div class="caja">
-								<i class="fas fa-dolly"></i>
-								<p>
-									<a href="">Recibir pedios proveedor</a>
+									<a href="../cMedicamentos/index.php">Medicamentos</a>
 								</p>
 							</div>
 						</div>
@@ -94,7 +102,23 @@
 							<div class="caja">
 								<i class="fas fa-clinic-medical"></i>
 								<p>
-									<a href="">Pedidos de farmacias</a>
+									<a href="../cFarmacias/index.php">Farmacias</a>
+								</p>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+							<div class="caja">
+									<i class="fas fa-clipboard-list"></i>
+								<p>
+									<a href="../cInventarios/index.php">Inventario</a>
+								</p>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">       
+							<div class="caja">
+								<i class="fas fa-truck"></i>
+								<p>
+									<a href="../cPedidosProveedores/index.php">Pedido proveedor</a>
 								</p>
 							</div>
 						</div>
@@ -102,19 +126,31 @@
 							<div class="caja">
 								<i class="fas fa-dolly"></i>
 								<p>
-									<a href="">Surtir pedidos de farmacias</a>
+									<a href="../cRecibirPedidos/index.php">Recibir</a>
+								</p>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+						</div>
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">	
+						</div>
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+							<div class="caja">
+								<i class="fas fa-clinic-medical"></i>
+								<p>
+									<a href="../cPedidosfarmacias/index.php">Pedidos farmacias</a>
+								</p>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+							<div class="caja">
+								<i class="fas fa-dolly"></i>
+								<p>
+									<a href="../cRecibirSurtidos/index.php">Surtir</a>
 								</p>
 							</div>
 						</div>
 						
-						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
-							<div class="caja">
-								<i class="fas fa-clipboard-list"></i>
-								<p>
-									<a href="">Inventario</a>
-								</p>
-							</div>
-						</div>
 					</div>
 				</div>	
 

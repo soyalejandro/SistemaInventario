@@ -12,7 +12,7 @@
  */
 
 ob_start();
-include(dirname(__FILE__).'/res/listaSurtido.php');
+include(dirname(__FILE__).'/res/listaMedicamento.php');
 $content = ob_get_clean();
 
 // convert to PDF

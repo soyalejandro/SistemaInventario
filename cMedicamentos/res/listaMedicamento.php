@@ -6,13 +6,12 @@ include'../funcionesPHP/calcularEdad.php';
         
 mysql_query("SET NAMES utf8");
 $consulta=mysql_query("SELECT
-                        (SELECT nombre_farmacia FROM farmacias WHERE farmacias.id_farmacia = pedidos_farmacias.id_farmacia),
-                        (SELECT numero_farmacia FROM farmacias WHERE farmacias.id_farmacia = pedidos_farmacias.id_farmacia),
-                        total_pedido,
-                        total_entregado,
-                        diferencia
+                       nombre_medicamento,
+                       codigo,
+                       tipo_medicamento,
+                       via_administracion
                         FROM
-                        pedidos_farmacias ".$filtro,$conexion) or die (mysql_error());
+                        medicamentos WHERE activo=1".$filtro,$conexion) or die (mysql_error());
    
 //Descargamos el arreglo que arroja la consulta
 $n=1;
@@ -132,7 +131,7 @@ $fechaEspanol=fechaCastellano($fecha);
     </tr>
     <tr >
         <td  colspan="12" class="encabezado">
-            Reporte Pedidos Farmacias
+            Reporte Medicamento
         </td>
     </tr> 
     <tr >
@@ -140,27 +139,26 @@ $fechaEspanol=fechaCastellano($fecha);
             #
         </td>
         <td  colspan="3" class="titular">
-            Farmacias
+            Nombre Medicamento
+        </td>
+        <td  colspan="2" class="titular">
+            Codigo
         </td>
         <td  colspan="3" class="titular">
-           Total Pedido
+            Tipo Medicamento
         </td>
         <td  colspan="3" class="titular">
-           Total Entregado
-        </td>
-        <td  colspan="3" class="titular">
-           Diferencia
+            Via de Administracion
         </td>
     </tr>
 
     <?php
         $n=1;
         while($row=mysql_fetch_row($consulta)){
-            $nombreFarmacia = $row[0];
-            $numeroFarmacia = $row[1];
-            $total = $row[2];
-            $entregado = $row[3];
-            $diferencia = $row[4];
+            $nombreMedicamento = $row[0];
+            $codigo = $row[1];
+            $tipo = $row[2]; 
+            $via = $row[3]; 
 
     ?>
         <tr >
@@ -171,22 +169,22 @@ $fechaEspanol=fechaCastellano($fecha);
             </td>
             <td  colspan="3" class="borde">
                 <p class="parrafo">
-                    <?php echo $nombreFarmacia .' '. $numeroFarmacia; ?>
+                    <?php echo $nombreMedicamento; ?>
+                </p>
+            </td>
+            <td  colspan="2" class="borde">
+                <p class="parrafo">
+                    <?php echo $codigo; ?>
                 </p>
             </td>
             <td  colspan="3" class="borde">
                 <p class="parrafo">
-                    <?php echo $total; ?>
+                    <?php echo $tipo; ?>
                 </p>
             </td>
             <td  colspan="3" class="borde">
                 <p class="parrafo">
-                    <?php echo $entregado; ?>
-                </p>
-            </td>
-            <td  colspan="3" class="borde">
-                <p class="parrafo">
-                    <?php echo $diferencia; ?>
+                    <?php echo $via; ?>
                 </p>
             </td>
         </tr>

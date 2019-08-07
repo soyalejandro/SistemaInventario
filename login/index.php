@@ -15,12 +15,13 @@
 	<link href="../plugins/bootstrap-toggle-master/css/bootstrap-toggle.css" rel="stylesheet">
     <link href="../plugins/bootstrap-toggle-master/stylesheet.css" rel="stylesheet">
 </head>
-<body class="login">
+<body class="login" >
 	<div class="container" style="display:none" id="cuerpo">
 		<div class="row justify-content-md-center">
 			<div class="col-md-auto login-box borde sombra">
+				 <img src="../img/logoo.png" width='80' height='80' class="center">
 				<h3 class="text-center titulo">Iniciar Sesión</h3>
-				<hr>
+				<hr style="background:red; margin:14px; height:0px;">
 				<form id="frmIngreso">
 					<div class="form-row">
 						<div class="col-md-12">

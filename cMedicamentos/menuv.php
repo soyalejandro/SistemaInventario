@@ -8,15 +8,15 @@
 			</a>
 		</li>
 		<li class="list-unstyled">
-			<a href="#" onclick="imprimir();" id="mnuB" class="menuInicio">
-				<i class="far fa-file-pdf"></i> Reportes Pedidos
+			<a href="#" onclick="imprimir(1);" id="mnuB" class="menuInicio">
+				<i class="far fa-file-pdf"></i> Reportes Medicamentos
 			</a>
-		</li >
+		</li >	
 		<li class="list-unstyled" class="menuInicio">
 			<a href="../inicio/index.php" id="mnuC">
 				<i class="fas fa-home"></i> Inicio 
 			</a>
-		</li > 
+		</li >
 		<li class="list-unstyled icoMedia modulo">
 			<a href="#" onclick="salir();"><i class="fas fa-sign-out-alt"></i> <label class="modulo"> Salir</label></a></a>
 		</li>

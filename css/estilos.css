@@ -4,6 +4,10 @@
 	--colorSecundario:  #0ceaf9;
 	--colorTerciario : #fff;
 }
+img{
+display:block;
+margin:auto;
+}
 
 div.caja a{
 	-webkit-transition: all .2s ease;
