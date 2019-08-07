@@ -1,5 +1,5 @@
-<meta charset="UTF-8">
-	<title>Plantilla</title>
+	<meta charset="UTF-8">
+	<title>Sistema Hospitalario</title>
 
 	<!-- Meta para compatibilidad en dispositivos mobiles -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,7 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="../plugins/bootstrap/css/bootstrap.min.css">
 
     <!-- fontawesome -->
-	<link rel="stylesheet" href="../plugins/fontawesome-free-5.8.1-web/css/all.min.css">
+	<link rel="stylesheet" href="../plugins/fontawesome-free-5.8.1-web/css/all.min.css"> 
 
 	<!-- DataTableButtons -->
      <link rel="stylesheet" href="../plugins/dataTableButtons/buttons.dataTables.min.css">

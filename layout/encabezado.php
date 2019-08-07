@@ -4,14 +4,12 @@
 					<a href="#" class="color  borde" id="menuV">
 						<i class="fas fa-bars"></i>
 					</a>
-				</li>
+				</li>	
 				<li class="list-unstyled">
-					<a href="#" id="linkCambioPass2"  class="color borde">
+					<a href="#" class="color borde" onclick="cambiar_contra()">
 						<i class="fas fa-unlock-alt"></i>
 					</a>
 				</li>
-				
-
 				<li class="list-unstyled modulo">
 					<a href="../inicio/index.php" class="color borde">
 						<i class="fas fa-home"></i>

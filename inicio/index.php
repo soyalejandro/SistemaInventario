@@ -4,17 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Sistema Hospitalario</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" type="text/css" href="../plugins/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../plugins/fontawesome-free-5.8.1-web/css/all.min.css">
-	<link rel="stylesheet" type="text/css" href="../css/estilos.css">
-	<!-- Alertify	 -->
-	<link rel="stylesheet" type="text/css" href="../plugins/alertifyjs/css/alertify.css">
-	<link rel="stylesheet" type="text/css" href="../plugins/alertifyjs/css/themes/bootstrap.css">
-	<!-- fileinput -->
-	<link href="../plugins/bootstrap-fileinput-master/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+	<?php include('../header.php');?>
 </head>
 <body>
 	<header>
@@ -56,6 +46,8 @@
 		 ?>			
 
 	</footer>
+
+	<?php include('../footer.php');?>
 	<script src="../plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	<!-- Preloaders -->
     <script src="../plugins/Preloaders/jquery.preloaders.js"></script>
